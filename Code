@@ -1,39 +1,27 @@
-import numpy as np
-import pandas as pd
-import os
-for dirname, _, filenames in os.walk('/kaggle/input'):
-  for filename in filenames:
-    print(os.path.join(dirname, filename))
+****************************************************************************************************
 from fastai.vision.all import *
-training_files = get_image_files('/kaggle/input/face-shape-dataset/FaceShape Dataset/training_set/')
+training_files = get_image_files('path')
 len(training_files)
 print(training_files[0])
 def label_func(p):
-  return str(p).split('/')[-2]
-dls = ImageDataLoaders.from_path_func('.', training_files, label_func, item_tfms=Resize(224))
-dls.show_batch()
-learn = cnn_learner(dls, resnet34, metrics=error_rate)
-from PIL import ImageFile
-ImageFile.LOAD_TRUNCATED_IMAGES = True
-learn.lr_find()
-learn.fine_tune(2, 2e-3)
-learn.fine_tune(2, 2e-3)
-learn.fine_tune(5, 0.002754228748381138)
-learn.show_results()
+    res = str(p).split('\\')[-2]
+    d = {
+        'Heart': 'Heart',
+        'Oblong': 'Oblong',
+        'Oval': 'Oval',
+        'Round': 'Round',
+        'Square': 'Square'
+    }
+    return d[res]
+    dls = ImageDataLoaders.from_path_func('.', training_files, label_func, item_tfms=Resize(224))
+    learn = cnn_learner(dls, resnet34, metrics=error_rate)
+learn.load(r'C:\Users\neera\Downloads\archive\models\_tmp')
 interp = Interpretation.from_learner(learn)
 interp.plot_top_losses(9, figsize=(15,10))
+interp=ClassificationInterpretation.from_learner(learn)
+interp.plot_confusion_matrix()
+from PIL import ImageFile
+ImageFile.LOAD_TRUNCATED_IMAGES = True
 from IPython.display import Image
-training_files[5]
-print(learn.predict(training_files[5]))
-Image(training_files[5], width=300)
-print(learn.predict('../input/test-shapes/morgen.jpeg'))
-Image('../input/test-shapes/morgen.jpeg', width=300)
-print(learn.predict('../input/test-shapes/rect.jpeg'))
-Image('../input/test-shapes/rect.jpeg', width=300)
-print(learn.predict('../input/test-shapes/rect2.jpeg'))
-Image('../input/test-shapes/rect2.jpeg', width=300)
-print(learn.predict('../input/test-shapes/round.jpeg'))
-Image('../input/test-shapes/round.jpeg', width=300)
-print(learn.predict('../input/test-shapes/selena.jpeg'))
-Image('../input/test-shapes/selena.jpeg', width=300)
-learn.export()
+print(learn.predict(r'path'))
+Image(r'path',width=300)
