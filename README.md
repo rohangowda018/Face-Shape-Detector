@@ -1,1 +1,3 @@
 # Face-Shape-Detector
+
+The application allows the user to input a facial photograph and provides best prediction of the face shape. Each image is compared and the results indicate that the system was trained, validated and tested. The implemented system can identify face shape with good accuracy rate. However, there is room for some potential enhancements. This system will be trained with 5000 faces of women aging from 20-40 years to identify shape mainly square, oval, oblong, round and heart. Applications can be implemented using this system to include eyeglasses, hairstyles, clothing to provide a good sense of fashion.
